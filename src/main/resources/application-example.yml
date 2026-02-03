@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://host:port/db
+    username: postgres
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+jwt:
+  secret: thisIsMysecregtfrdesww233eggtffeeddgkjjhhtdhttebd54ndhdhfhhhshs8877465sbbdd
+recaptcha:
+  secret: getOneFromGoogle
