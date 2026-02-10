@@ -2,6 +2,7 @@ package com.ecjtaneo.hotel_management_system.infrastructure.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,6 +24,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/auth/logout").authenticated()
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/rooms/**").hasAuthority("GUESTS")
+                        .requestMatchers("/rooms/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .build();
     }
