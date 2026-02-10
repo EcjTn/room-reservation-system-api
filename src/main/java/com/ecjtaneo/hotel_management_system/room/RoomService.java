@@ -7,10 +7,12 @@ import com.ecjtaneo.hotel_management_system.room.dto.RoomCreationDto;
 import com.ecjtaneo.hotel_management_system.room.dto.RoomPublicResponseDto;
 import com.ecjtaneo.hotel_management_system.room.model.Room;
 import com.ecjtaneo.hotel_management_system.user.mapper.RoomMapper;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
 public class RoomService {
     private final RoomRepository roomRepository;
     private final RoomMapper roomMapper;
