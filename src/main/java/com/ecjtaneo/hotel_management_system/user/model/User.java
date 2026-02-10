@@ -1,6 +1,5 @@
 package com.ecjtaneo.hotel_management_system.user.model;
 
-import com.ecjtaneo.hotel_management_system.auth.model.RefreshToken;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,7 +23,4 @@ public class User {
     @Column(nullable = false)
     private String password;
     private LocalDateTime created_at = LocalDateTime.now();
-
-    @OneToMany(mappedBy = "user")
-    List<RefreshToken> refreshTokens;
 }

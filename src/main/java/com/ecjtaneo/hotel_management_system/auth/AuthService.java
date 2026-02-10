@@ -8,7 +8,6 @@ import com.ecjtaneo.hotel_management_system.common.exception.ValidationException
 import com.ecjtaneo.hotel_management_system.infrastructure.security.recaptcha.RecaptchaService;
 import com.ecjtaneo.hotel_management_system.user.UserService;
 import com.ecjtaneo.hotel_management_system.user.dto.UserCreationCommandDto;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,20 +21,17 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
     private RecaptchaService recaptchaService;
     private AuthenticationManager authenticationManager;
-    private RefreshTokenRepository refreshTokenRepository;
 
     public AuthService(
         UserService userService,
         PasswordEncoder passwordEncoder,
         RecaptchaService recaptchaService,
-        AuthenticationManager authenticationManager,
-        RefreshTokenRepository refreshTokenRepository
+        AuthenticationManager authenticationManager
     ) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.recaptchaService = recaptchaService;
         this.authenticationManager = authenticationManager;
-        this.refreshTokenRepository = refreshTokenRepository;
     }
 
     public MessageResponseDto register(AuthRegisterDto user) {

@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController {
     private AuthService authService;
-    private final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
-
     public AuthController(AuthService authService) {
         this.authService = authService;
     }

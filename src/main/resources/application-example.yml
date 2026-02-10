@@ -7,7 +7,5 @@ spring:
     hibernate:
       ddl-auto: update
       show-sql: true
-jwt:
-  secret: thisIsMysecregtfrdesww233eggtffeeddgkjjhhtdhttebd54ndhdhfhhhshs8877465sbbdd
 recaptcha:
   secret: getOneFromGoogle

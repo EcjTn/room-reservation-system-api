@@ -11,36 +11,28 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.ecjtaneo.hotel_management_system.user.model.User;
 
 public class UserDetailsImpl implements UserDetails, Serializable {
-    private final User user;
+    private final String userRole;
+    private final String username;
+    private final String userPassword;
+
     public UserDetailsImpl(User user) {
-        this.user = user;
+        this.username = user.getUsername();
+        this.userPassword = user.getPassword();
+        this.userRole = user.getRole().name();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(user.getRole().name()));
+        return List.of(new SimpleGrantedAuthority(userRole));
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return this.userPassword;
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return this.username;
     }
-
-    public Long getId() {
-        return user.getId();
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public String getRole() {
-        return user.getRole().name();
-    }
-    
 }
