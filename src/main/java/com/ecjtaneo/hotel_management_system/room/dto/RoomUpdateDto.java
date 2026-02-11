@@ -1,4 +1,4 @@
-package com.ecjtaneo.hotel_management_system.room;
+package com.ecjtaneo.hotel_management_system.room.dto;
 
 import com.ecjtaneo.hotel_management_system.room.model.RoomStatus;
 import com.ecjtaneo.hotel_management_system.room.model.RoomType;

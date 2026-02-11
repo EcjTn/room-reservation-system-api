@@ -3,6 +3,7 @@ package com.ecjtaneo.hotel_management_system.room;
 import com.ecjtaneo.hotel_management_system.common.dto.MessageResponseDto;
 import com.ecjtaneo.hotel_management_system.room.dto.RoomCreationDto;
 import com.ecjtaneo.hotel_management_system.room.dto.RoomPublicResponseDto;
+import com.ecjtaneo.hotel_management_system.room.dto.RoomUpdateDto;
 import com.ecjtaneo.hotel_management_system.room.model.RoomStatus;
 import com.ecjtaneo.hotel_management_system.room.model.RoomType;
 import jakarta.validation.Valid;

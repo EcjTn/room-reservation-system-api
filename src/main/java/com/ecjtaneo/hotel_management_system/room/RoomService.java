@@ -5,6 +5,7 @@ import com.ecjtaneo.hotel_management_system.common.exception.ResourceConflictExc
 import com.ecjtaneo.hotel_management_system.common.exception.ResourceNotFoundException;
 import com.ecjtaneo.hotel_management_system.room.dto.RoomCreationDto;
 import com.ecjtaneo.hotel_management_system.room.dto.RoomPublicResponseDto;
+import com.ecjtaneo.hotel_management_system.room.dto.RoomUpdateDto;
 import com.ecjtaneo.hotel_management_system.room.model.Room;
 import com.ecjtaneo.hotel_management_system.room.mapper.RoomMapper;
 import com.ecjtaneo.hotel_management_system.room.model.RoomStatus;
