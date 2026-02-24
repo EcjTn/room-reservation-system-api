@@ -54,7 +54,7 @@ public class BookingService {
         bookingRepository.deleteBookingById(id);
     }
 
-    public int updateStatusById(Long id, BookingStatus status) {
+    public int updateBookingStatus(Long id, BookingStatus status) {
         return bookingRepository.updateStatusById(id, status);
     }
 
