@@ -11,7 +11,9 @@ import java.util.Optional;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    public void deleteBookingById(Long id);
+    @Modifying
+    @Query("DELETE FROM Booking b WHERE b.id = :id")
+    public int deleteBookingById(Long id);
 
     @Modifying
     @Query("""

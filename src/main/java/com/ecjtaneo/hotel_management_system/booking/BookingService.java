@@ -4,6 +4,8 @@ import com.ecjtaneo.hotel_management_system.booking.dto.BookingCreationDto;
 import com.ecjtaneo.hotel_management_system.booking.model.Booking;
 import com.ecjtaneo.hotel_management_system.booking.model.BookingStatus;
 import com.ecjtaneo.hotel_management_system.common.dto.MessageResponseDto;
+import com.ecjtaneo.hotel_management_system.common.exception.ResourceNotFoundException;
+import com.ecjtaneo.hotel_management_system.common.exception.ValidationException;
 import com.ecjtaneo.hotel_management_system.room.RoomService;
 import com.ecjtaneo.hotel_management_system.room.model.Room;
 import com.ecjtaneo.hotel_management_system.user.UserService;
@@ -50,12 +52,9 @@ public class BookingService {
         return new MessageResponseDto("Booking successfully created.");
     }
 
-    public void deleteBooking(Long id) {
-        bookingRepository.deleteBookingById(id);
-    }
-
-    public int updateBookingStatus(Long id, BookingStatus status) {
-        return bookingRepository.updateStatusById(id, status);
+    public MessageResponseDto deleteBooking(Long id) {
+        if(bookingRepository.deleteBookingById(id) <= 0) throw new ResourceNotFoundException("Booking not found");
+        return new MessageResponseDto("Booking successfully deleted.");
     }
 
 }

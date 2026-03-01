@@ -5,12 +5,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableMethodSecurity
 public class WebSecurityConfig {
 
     @Bean
@@ -24,7 +26,12 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/auth/logout").authenticated()
                         .requestMatchers("/auth/**").permitAll()
+
+                        .requestMatchers(HttpMethod.DELETE, "/bookings/**").hasAuthority("ADMIN")
+                        .requestMatchers("/bookings/**").hasAnyAuthority("ADMIN", "GUEST")
+
                         .requestMatchers(HttpMethod.GET, "/rooms/**").hasAuthority("GUEST")
+
                         .requestMatchers("/rooms/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .build();

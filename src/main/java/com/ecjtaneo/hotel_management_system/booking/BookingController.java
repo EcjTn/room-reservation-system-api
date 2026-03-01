@@ -4,11 +4,10 @@ import com.ecjtaneo.hotel_management_system.booking.dto.BookingCreationDto;
 import com.ecjtaneo.hotel_management_system.common.dto.MessageResponseDto;
 import com.ecjtaneo.hotel_management_system.infrastructure.security.UserDetailsImpl;
 import jakarta.validation.Valid;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/bookings")
@@ -25,6 +24,11 @@ public class BookingController {
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         Long userId = userDetails.getUserId();
         return bookingService.createBooking(bookingCreationDto, userId);
+    }
+
+    @DeleteMapping("/{id}")
+    public MessageResponseDto deleteBooking(@PathVariable("id") Long id) {
+        return bookingService.deleteBooking(id);
     }
 
 }
