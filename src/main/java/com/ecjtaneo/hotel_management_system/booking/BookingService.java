@@ -53,6 +53,7 @@ public class BookingService {
         return new MessageResponseDto("Booking successfully created.");
     }
 
+    @Transactional
     public MessageResponseDto deleteBooking(Long id) {
         if(bookingRepository.deleteBookingById(id) <= 0) throw new ResourceNotFoundException("Booking not found");
         return new MessageResponseDto("Booking successfully deleted.");
@@ -72,6 +73,32 @@ public class BookingService {
 
     public boolean canCancelBooking(Long id, Long userId) {
         return bookingRepository.existsBookingByIdAndUserId(id, userId);
+    }
+
+    //Admins only operations
+
+    @Transactional
+    public MessageResponseDto confirmBooking(Long id) {
+        Booking booking = bookingRepository.findWithRoomByIdAndStatus(id, BookingStatus.PENDING)
+                .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
+
+        roomService.markRoomOccupied(booking.getRoom().getRoomNumber());
+        booking.setStatus(BookingStatus.CONFIRMED);
+
+        booking.setStatus(BookingStatus.CONFIRMED);
+
+        return new MessageResponseDto("Booking successfully confirmed.");
+    }
+
+    public MessageResponseDto completeBooking(Long id) {
+        Booking booking = bookingRepository.findWithRoomByIdAndStatus(id, BookingStatus.CONFIRMED)
+                .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
+
+        booking.setStatus(BookingStatus.COMPLETED);
+
+        roomService.markRoomAvailable(booking.getRoom().getRoomNumber());
+
+        return new MessageResponseDto("Booking successfully completed.");
     }
 
 }
