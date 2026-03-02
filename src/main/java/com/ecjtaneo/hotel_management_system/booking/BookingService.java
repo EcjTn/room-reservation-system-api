@@ -60,10 +60,13 @@ public class BookingService {
 
     @Transactional
     public MessageResponseDto cancelBooking(Long id) {
-        Booking booking = bookingRepository.findWithRoomById(id)
+        Booking booking = bookingRepository.findWithRoomByIdAndStatus(id, BookingStatus.PENDING)
                 .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
+
         booking.setStatus(BookingStatus.CANCELLED);
+
         roomService.markRoomAvailable(booking.getRoom().getRoomNumber());
+
         return new MessageResponseDto("Booking successfully cancelled.");
     }
 
