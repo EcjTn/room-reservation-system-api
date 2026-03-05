@@ -28,6 +28,9 @@ public class BookingService {
     }
 
     public MessageResponseDto createBooking(BookingCreationDto bookingCreationDto, Long userId) {
+
+        if(bookingCreationDto.startDate().isAfter(bookingCreationDto.endDate())) throw new ValidationException("End date must be after start date p");
+
         Room room = roomService.findAvailableRoom(bookingCreationDto.roomNumber());
         roomService.markRoomBooked(room.getRoomNumber());
         User userRef = userService.getUserReference(userId);
