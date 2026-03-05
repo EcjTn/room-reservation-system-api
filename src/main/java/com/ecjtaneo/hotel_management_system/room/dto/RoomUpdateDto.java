@@ -9,13 +9,13 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public record RoomUpdateDto(
-        @NotBlank
+        @NotNull
         RoomStatus status,
 
         @NotBlank
         RoomType type,
 
-        @NotBlank
+        @NotNull
         @Min(value = 500)
         BigDecimal price_per_night
 ) {}

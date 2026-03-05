@@ -92,9 +92,8 @@ public class BookingService {
         Booking booking = bookingRepository.findWithRoomByIdAndStatus(id, BookingStatus.CONFIRMED)
                 .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
 
-        booking.setStatus(BookingStatus.COMPLETED);
-
         roomService.markRoomAvailable(booking.getRoom().getRoomNumber());
+        booking.setStatus(BookingStatus.COMPLETED);
 
         return new MessageResponseDto("Booking successfully completed.");
     }
