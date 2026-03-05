@@ -13,8 +13,9 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "bookings", uniqueConstraints = {
-        @UniqueConstraint(name = "unique_user_room", columnNames = {"user_id", "room_id"})
+@Table(name = "bookings", indexes = {
+        @Index(name = "idx_user_id", columnList = "room_id"),
+        @Index(name = "idx_user_id", columnList = "user)id")
 })
 public class Booking {
     @Id
