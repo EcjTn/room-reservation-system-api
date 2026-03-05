@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
@@ -27,7 +28,13 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     public Optional<Booking> findWithUserAndRoomById(Long id);
 
     @EntityGraph(attributePaths = {"room"})
-    public Optional<Booking> findWithRoomByIdAndStatus(Long id, BookingStatus status);
+    public Optional<Booking> findByIdAndStatus(Long id, BookingStatus status);
 
     public boolean existsBookingByIdAndUserId(Long id, Long userId);
+
+    @EntityGraph(attributePaths = {"user", "room"})
+    public List<Booking> findTop10ByUserIdOrderByIdDesc(Long id);
+
+    @EntityGraph(attributePaths = {"user", "room"})
+    public List<Booking> findTop10ByIdLessThanAndUserIdOrderByIdDesc(Long lastSeenId, Long userId);
 }

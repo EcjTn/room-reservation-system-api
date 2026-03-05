@@ -64,7 +64,7 @@ public class BookingService {
 
     @Transactional
     public MessageResponseDto cancelBooking(Long id) {
-        Booking booking = bookingRepository.findWithRoomByIdAndStatus(id, BookingStatus.PENDING)
+        Booking booking = bookingRepository.findByIdAndStatus(id, BookingStatus.PENDING)
                 .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
 
         booking.setStatus(BookingStatus.CANCELLED);
@@ -82,7 +82,7 @@ public class BookingService {
 
     @Transactional
     public MessageResponseDto confirmBooking(Long id) {
-        Booking booking = bookingRepository.findWithRoomByIdAndStatus(id, BookingStatus.PENDING)
+        Booking booking = bookingRepository.findByIdAndStatus(id, BookingStatus.PENDING)
                 .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
 
         roomService.markRoomOccupied(booking.getRoom().getRoomNumber());
@@ -92,7 +92,7 @@ public class BookingService {
     }
 
     public MessageResponseDto completeBooking(Long id) {
-        Booking booking = bookingRepository.findWithRoomByIdAndStatus(id, BookingStatus.CONFIRMED)
+        Booking booking = bookingRepository.findByIdAndStatus(id, BookingStatus.CONFIRMED)
                 .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
 
         roomService.markRoomAvailable(booking.getRoom().getRoomNumber());
