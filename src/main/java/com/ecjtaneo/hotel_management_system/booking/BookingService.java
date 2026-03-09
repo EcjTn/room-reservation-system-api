@@ -35,7 +35,6 @@ public class BookingService {
         if(bookingCreationDto.startDate().isAfter(bookingCreationDto.endDate())) throw new ValidationException("End date must be after start date p");
 
         Room room = roomService.findAvailableRoom(bookingCreationDto.roomNumber());
-        roomService.markRoomBooked(room.getRoomNumber());
         User userRef = userService.getUserReference(userId);
 
         BigDecimal totalAmount = room.getPricePerNight()
@@ -55,6 +54,7 @@ public class BookingService {
         booking.setStatus(BookingStatus.PENDING);
 
         bookingRepository.save(booking);
+        roomService.markRoomBooked(room.getRoomNumber());
 
         return new MessageResponseDto("Booking successfully created.");
     }

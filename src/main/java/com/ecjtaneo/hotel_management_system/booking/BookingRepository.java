@@ -41,7 +41,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             b.status,
             b.startDate,
             b.endDate,
-            b.totalAmount
+            b.totalAmount,
+            b.paymentStatus
         )
         FROM Booking b
         JOIN b.room r
@@ -59,7 +60,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             b.status,
             b.startDate,
             b.endDate,
-            b.totalAmount
+            b.totalAmount,
+            b.paymentStatus
          )
          FROM Booking b
          JOIN b.room r
