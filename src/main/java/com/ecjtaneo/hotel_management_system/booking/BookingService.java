@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -89,8 +90,27 @@ public class BookingService {
         return bookingRepository.findTop10ByIdLessThanAndUserIdOrderByIdDesc(lastSeenId, userId);
     }
 
-    //Admins only operations
+    public long getBookingsCount() {
+        return bookingRepository.count();
+    }
 
+    public long getActiveBookingsCount() {
+        return bookingRepository.countByStatus(BookingStatus.CONFIRMED);
+    }
+
+    public long getCompletedBookingsCount() {
+        return bookingRepository.countByStatus(BookingStatus.COMPLETED);
+    }
+
+    public BigDecimal calculateTotalRevenue() {
+        return bookingRepository.sumTotalAmountByStatus(PaymentStatus.PAID);
+    }
+
+    public BigDecimal calculateRevenueBetweenDates(LocalDateTime start, LocalDateTime end) {
+        return bookingRepository.sumByStatusAndCreatedAtBetween(PaymentStatus.PAID, start, end);
+    }
+
+    //Admins only operations
     @Transactional
     public MessageResponseDto confirmBooking(Long id) {
         Booking booking = bookingRepository.findByIdAndStatus(id, BookingStatus.PENDING)
@@ -103,6 +123,7 @@ public class BookingService {
         return new MessageResponseDto("Booking successfully confirmed.");
     }
 
+    @Transactional
     public MessageResponseDto completeBooking(Long id) {
         Booking booking = bookingRepository.findByIdAndStatus(id, BookingStatus.CONFIRMED)
                 .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));

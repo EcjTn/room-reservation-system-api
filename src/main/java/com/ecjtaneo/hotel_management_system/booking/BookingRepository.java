@@ -3,12 +3,16 @@ package com.ecjtaneo.hotel_management_system.booking;
 import com.ecjtaneo.hotel_management_system.booking.dto.BookingPublicResponseDto;
 import com.ecjtaneo.hotel_management_system.booking.model.Booking;
 import com.ecjtaneo.hotel_management_system.booking.model.BookingStatus;
+import com.ecjtaneo.hotel_management_system.booking.model.PaymentStatus;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +38,23 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     public boolean existsBookingByIdAndUserId(Long id, Long userId);
 
+    public long countByStatus(BookingStatus status);
+
+    @Query("""
+        SELECT COALESCE(SUM(b.totalAmount), 0)
+        FROM Booking b
+        WHERE b.paymentStatus = :paymentStatus
+        AND b.createdAt BETWEEN :start AND :end
+    """)
+    public BigDecimal sumByStatusAndCreatedAtBetween(PaymentStatus paymentStatus, LocalDateTime start, LocalDateTime end);
+
+    @Query("""
+        SELECT COALESCE(SUM(b.totalAmount), 0)
+        FROM Booking b
+        WHERE b.paymentStatus = :paymentStatus
+    """)
+    public BigDecimal sumTotalAmountByStatus(PaymentStatus paymentStatus);
+
     @Query("""
         SELECT new com.ecjtaneo.hotel_management_system.booking.dto.BookingPublicResponseDto(
             b.id,
@@ -51,7 +72,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
         LIMIT 10
     """)
     List<BookingPublicResponseDto> findTop10ByUserIdOrderByIdDesc(@Param("userId") Long userId);
-
 
     @Query("""
         SELECT new com.ecjtaneo.hotel_management_system.booking.dto.BookingPublicResponseDto(

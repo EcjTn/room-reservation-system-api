@@ -93,4 +93,12 @@ public class RoomService {
         return roomRepository.updateStatusByRoomNumber(roomNumber, RoomStatus.AVAILABLE);
     }
 
+    public long getAvailableRoomsCount() {
+        return roomRepository.countByStatus(RoomStatus.AVAILABLE);
+    }
+
+    public long getRoomsCount() {
+        return roomRepository.count();
+    }
+
 }

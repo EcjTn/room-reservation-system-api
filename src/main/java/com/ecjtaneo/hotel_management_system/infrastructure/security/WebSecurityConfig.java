@@ -35,6 +35,8 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/rooms/**").hasAnyAuthority("ADMIN", "GUEST")
                         .requestMatchers("/rooms/**").hasAuthority("ADMIN")
 
+                        .requestMatchers("/reports/**").hasAuthority("ADMIN")
+
                         .anyRequest().authenticated())
                 .build();
     }
