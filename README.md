@@ -44,7 +44,7 @@ This is a RESTful API for a Room Reservation System built with Spring Boot and P
 ![Room Info](images/room-info.PNG)
 
 ### Bookings
-![Booking History](images/booking-history.PNG)
+![Booking History](images/bookings-history.PNG)
 ![User Bookings](images/user-bookings.PNG)
 
 ### Reports
