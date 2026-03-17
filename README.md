@@ -69,3 +69,8 @@ This is a RESTful API for a Room Reservation System built with Spring Boot and P
 - **Pagination**: Implemented for scalable room listing instead of fetching all records at once.
 - **Global Exception Handling**: Centralized error handling for consistent API responses.
 - **RBAC Enforcement**: Secured endpoints based on user roles (guest/admin).
+
+## 🛠️ Setup Instructions
+- Clone repository 
+- Configure environment variables in docker-compose.yml (or application.yml)
+- Run `docker-compose up` to start the application
