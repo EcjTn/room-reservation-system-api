@@ -39,6 +39,7 @@ This is a RESTful API for a Room Reservation System built with Spring Boot and P
 ---
 
 ## 📸 Sample API Endpoints and Responses
+
 ### Room List and Info with Pagination
 ![Room List with Pagination](images/rooms-paginated.PNG)
 ![Room Info](images/room-info.PNG)
@@ -53,6 +54,18 @@ This is a RESTful API for a Room Reservation System built with Spring Boot and P
 ---
 
 ## ⚠️ Notes
+
 - This project is focused on backend development, and does not include a frontend interface. It is designed to be consumed by a frontend application or used for API testing and integration purposes.
 - It is also for project learning and development, and may not be suitable for production use without considering additional factors. 
 - Online payment gateways(e.g Stripe) are out of scope due to regional availability constraints, and the project is focused on Backend logic and API development.
+
+---
+
+## 🧠 Backend Practices
+
+- **N+1 Query Prevention**: Eliminated via LAZY loading + EntityGraph for optimized fetch plans.
+- **Efficient Data Access**: Proper indexing and query design to reduce DB load.
+- **Caching Strategy**: Redis used to cache frequently accessed room data.
+- **Pagination**: Implemented for scalable room listing instead of fetching all records at once.
+- **Global Exception Handling**: Centralized error handling for consistent API responses.
+- **RBAC Enforcement**: Secured endpoints based on user roles (guest/admin).
