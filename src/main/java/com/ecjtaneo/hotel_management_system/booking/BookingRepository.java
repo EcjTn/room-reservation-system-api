@@ -43,6 +43,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query("""
         SELECT new com.ecjtaneo.hotel_management_system.booking.dto.BookingPublicResponseDto(
             b.id,
+            u.id,
             r.roomNumber,
             b.status,
             b.startDate,
@@ -52,6 +53,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
         )
         FROM Booking b
         JOIN b.room r
+        JOIN b.user u
         ORDER BY b.id DESC
         LIMIT 10
     """)
@@ -61,6 +63,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query("""
         SELECT new com.ecjtaneo.hotel_management_system.booking.dto.BookingPublicResponseDto(
             b.id,
+            u.id,
             r.roomNumber,
             b.status,
             b.startDate,
@@ -70,6 +73,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
         )
         FROM Booking b
         JOIN b.room r
+        JOIN b.user u
         WHERE b.id < :lastSeenId
         ORDER BY b.id DESC
         LIMIT 10
@@ -95,6 +99,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query("""
         SELECT new com.ecjtaneo.hotel_management_system.booking.dto.BookingPublicResponseDto(
             b.id,
+            u.id,
             r.roomNumber,
             b.status,
             b.startDate,
@@ -104,7 +109,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
         )
         FROM Booking b
         JOIN b.room r
-        WHERE b.user.id = :userId
+        JOIN b.user u
+        WHERE u.id = :userId
         ORDER BY b.id DESC
         LIMIT 10
     """)
@@ -113,6 +119,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query("""
         SELECT new com.ecjtaneo.hotel_management_system.booking.dto.BookingPublicResponseDto(
             b.id,
+            u.id,
             r.roomNumber,
             b.status,
             b.startDate,
@@ -122,7 +129,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
          )
          FROM Booking b
          JOIN b.room r
-         WHERE b.user.id = :userId
+         JOIN b.user u
+         WHERE u.id = :userId
          AND b.id < :lastSeenId 
          ORDER BY b.id DESC
          LIMIT 10

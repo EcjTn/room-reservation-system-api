@@ -2,10 +2,10 @@ package com.ecjtaneo.hotel_management_system.room.dto;
 
 import com.ecjtaneo.hotel_management_system.room.model.RoomType;
 
-import java.math.BigDecimal;
+import java.io.Serializable;
 
-public record RoomPublicPartialResponseDto(
+public record RoomPublicPartialResponseDto (
         Long id,
         String roomNumber,
         RoomType type
-) {}
+) implements Serializable {}

@@ -12,6 +12,7 @@ import com.ecjtaneo.hotel_management_system.room.RoomService;
 import com.ecjtaneo.hotel_management_system.room.model.Room;
 import com.ecjtaneo.hotel_management_system.user.UserService;
 import com.ecjtaneo.hotel_management_system.user.model.User;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -90,6 +91,7 @@ public class BookingService {
         return bookingRepository.findTop10OrderByIdDescBefore(lastSeenId);
     }
 
+    @Cacheable(value = "bookings", key = "#userId")
     public List<BookingPublicResponseDto> getBookingsByUserId(Long userId) {
         return bookingRepository.findTop10ByUserIdOrderByIdDesc(userId);
     }

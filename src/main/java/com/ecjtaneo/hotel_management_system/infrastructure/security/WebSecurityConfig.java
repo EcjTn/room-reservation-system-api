@@ -27,6 +27,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/auth/logout").authenticated()
                         .requestMatchers("/auth/**").permitAll()
 
+                        .requestMatchers(HttpMethod.GET, "/bookings").hasAnyAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/bookings/**").hasAuthority("ADMIN")
                         .requestMatchers("/bookings/confirm/**").hasAuthority("ADMIN")
                         .requestMatchers("/bookings/complete/**").hasAuthority("ADMIN")

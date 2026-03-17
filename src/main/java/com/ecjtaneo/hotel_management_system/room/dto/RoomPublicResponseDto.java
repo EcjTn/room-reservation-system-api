@@ -3,6 +3,7 @@ package com.ecjtaneo.hotel_management_system.room.dto;
 import com.ecjtaneo.hotel_management_system.room.model.RoomStatus;
 import com.ecjtaneo.hotel_management_system.room.model.RoomType;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 public record RoomPublicResponseDto(
@@ -11,5 +12,5 @@ public record RoomPublicResponseDto(
         RoomStatus status,
         RoomType type,
         BigDecimal pricePerNight
-) {
+) implements Serializable {
 }
