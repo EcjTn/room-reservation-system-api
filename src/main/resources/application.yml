@@ -3,23 +3,24 @@ server:
     context-path: /api
 
 spring:
+  session:
+    timeout: 5h
+
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://127.0.0.1:5432/my-db}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:root}
 
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
 
-  cache:
-    type: redis
-
   data:
     redis:
       host: ${SPRING_DATA_REDIS_HOST:localhost}
       port: ${SPRING_DATA_REDIS_PORT:6379}
+      timeout: 60000
 
 recaptcha:
   secret: ${RECAPTCHA_SECRET}
