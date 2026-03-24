@@ -1,5 +1,6 @@
 package com.ecjtaneo.room_reservation_api.infrastructure.security;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -18,12 +19,23 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         return http
                 .cors(cors -> {})
+
                 .csrf(c -> c
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .ignoringRequestMatchers("/auth/register"))
-                .formLogin(f -> f.loginProcessingUrl("/auth/login"))
+
+                .formLogin(f -> f
+                        .loginProcessingUrl("/auth/login")
+                        .successHandler((req, res, auth) -> {res.setStatus(HttpServletResponse.SC_OK);})
+                        .failureHandler((req, res, auth) -> {res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);})
+                )
+
                 .httpBasic(h -> h.disable())
-                .logout(l -> l.logoutUrl("/auth/logout"))
+
+                .logout(l -> l
+                        .logoutUrl("/auth/logout")
+                        .logoutSuccessHandler((req, res, auth) -> {res.setStatus(HttpServletResponse.SC_OK);}))
+
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/auth/logout").authenticated()
                         .requestMatchers("/auth/**").permitAll()
