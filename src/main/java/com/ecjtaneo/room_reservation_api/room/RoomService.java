@@ -116,4 +116,10 @@ public class RoomService {
     public long getRoomsCount() {
         return roomRepository.count();
     }
+
+    public Room getRoomReferenceByRoom(String roomNumber) {
+        return roomRepository.findByRoomNumber(roomNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Room not found."));
+    }
+
 }
