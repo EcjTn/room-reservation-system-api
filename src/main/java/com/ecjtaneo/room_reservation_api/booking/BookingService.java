@@ -36,7 +36,10 @@ public class BookingService {
 
         if(bookingCreationDto.startDate().isAfter(bookingCreationDto.endDate())) throw new ValidationException("End date must be after start date p");
 
-        Room room = roomService.findAvailableRoom(bookingCreationDto.roomNumber());
+        int updateRoom = roomService.setRoomBookedIfAvailable(bookingCreationDto.roomNumber());
+        if(updateRoom <= 0) throw new ValidationException("Room not available");
+
+        Room room = roomService.getRoomReferenceByRoom(bookingCreationDto.roomNumber());
         User userRef = userService.getUserReference(userId);
 
         BigDecimal totalAmount = room.getPricePerNight()

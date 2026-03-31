@@ -80,11 +80,6 @@ public class RoomService {
         return new MessageResponseDto("Room successfully updated.");
     }
 
-    public Room findAvailableRoom(String roomNumber) {
-        return roomRepository.findByRoomNumberAndStatus(roomNumber, RoomStatus.AVAILABLE)
-                .orElseThrow(() -> new ResourceNotFoundException("No available rooms found."));
-    }
-
     @Transactional
     @CacheEvict(value = "room", key = "#roomNumber")
     public int setRoomBooked(String roomNumber) {
