@@ -66,6 +66,7 @@ This is a RESTful API for a Room Reservation System built with Spring Boot and P
 - **N+1 Query Prevention**: Eliminated via LAZY loading + EntityGraph for optimized fetch plans.
 - **Efficient Data Access**: Proper indexing and query design to reduce DB load.
 - **Caching Strategy**: Redis used to cache frequently accessed data.
+- **Room Concurrency Safe**: Uses conditional updates backed by database row-level exclusive locks, ensuring only one transaction can change a room's status at a time.
 - **Cursor-based Pagination**: Enables efficient and scalable room listing by loading records in chunks using cursors instead of fetching all at once.
 - **Global Exception Handling**: Centralized error handling for consistent API responses.
 - **RBAC Enforcement**: Secured endpoints based on user roles (guest/admin).
