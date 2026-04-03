@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,20 +33,25 @@ public class BookingService {
         this.userService = userService;
     }
 
+    private BigDecimal calculateTotalAmount(BigDecimal pricePerNight, LocalDate startDate, LocalDate endDate) {
+        return pricePerNight
+                .multiply(new BigDecimal(endDate.toEpochDay() - startDate.toEpochDay()));
+    }
+
+    private boolean validateDates(LocalDate startDate, LocalDate endDate) {
+        return startDate.isBefore(endDate);
+    }
+
     public MessageResponseDto createBooking(BookingCreationDto bookingCreationDto, Long userId) {
-
-        if(bookingCreationDto.startDate().isAfter(bookingCreationDto.endDate())) throw new ValidationException("End date must be after start date p");
-
+        if(!validateDates(bookingCreationDto.startDate(), bookingCreationDto.endDate())) throw new ValidationException("Invalid dates");
+        
         int updateRoom = roomService.setRoomBookedIfAvailable(bookingCreationDto.roomNumber());
         if(updateRoom <= 0) throw new ValidationException("Room not available");
 
         Room room = roomService.getRoomReferenceByRoom(bookingCreationDto.roomNumber());
         User userRef = userService.getUserReference(userId);
 
-        BigDecimal totalAmount = room.getPricePerNight()
-                .multiply(new BigDecimal(
-                        bookingCreationDto.endDate().toEpochDay() - bookingCreationDto.startDate().toEpochDay()
-                ));
+        BigDecimal totalAmount = calculateTotalAmount(room.getPricePerNight(), bookingCreationDto.startDate(), bookingCreationDto.endDate());
 
         Booking booking = new Booking();
 
