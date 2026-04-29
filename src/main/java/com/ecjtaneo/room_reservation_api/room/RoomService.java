@@ -11,6 +11,7 @@ import com.ecjtaneo.room_reservation_api.room.model.Room;
 import com.ecjtaneo.room_reservation_api.room.mapper.RoomMapper;
 import com.ecjtaneo.room_reservation_api.room.model.RoomStatus;
 import com.ecjtaneo.room_reservation_api.room.model.RoomType;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -19,14 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RoomService {
     private final RoomRepository roomRepository;
     private final RoomMapper roomMapper;
-
-    public RoomService(RoomRepository roomRepository, RoomMapper roomMapper) {
-        this.roomRepository = roomRepository;
-        this.roomMapper = roomMapper;
-    }
 
     public MessageResponseDto createNewRoom(RoomCreationDto roomCreationDto) {
         if(roomRepository.existsByRoomNumber(roomCreationDto.roomNumber())) throw new ResourceConflictException("Room already exists");

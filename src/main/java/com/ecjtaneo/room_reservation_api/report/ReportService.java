@@ -3,20 +3,17 @@ package com.ecjtaneo.room_reservation_api.report;
 import com.ecjtaneo.room_reservation_api.booking.BookingService;
 import com.ecjtaneo.room_reservation_api.report.dto.ReportsSummaryDto;
 import com.ecjtaneo.room_reservation_api.room.RoomService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Service
+@RequiredArgsConstructor
 public class ReportService {
     private final BookingService bookingService;
     private final RoomService roomService;
-
-    public ReportService(BookingService bookingService, RoomService roomService) {
-        this.bookingService = bookingService;
-        this.roomService = roomService;
-    }
 
     public ReportsSummaryDto getReportsSummary() {
         long totalBookings = bookingService.getBookingsCount();

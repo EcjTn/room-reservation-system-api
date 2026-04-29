@@ -2,6 +2,7 @@ package com.ecjtaneo.room_reservation_api.booking;
 
 import com.ecjtaneo.room_reservation_api.booking.dto.BookingPublicResponseDto;
 import com.ecjtaneo.room_reservation_api.infrastructure.security.UserDetailsImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -10,12 +11,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserBookingController {
     private final BookingService bookingService;
-
-    public UserBookingController(BookingService bookingMapper) {
-        this.bookingService = bookingMapper;
-    }
 
     @GetMapping("/me/bookings")
     public List<BookingPublicResponseDto> showBookings(

@@ -5,15 +5,13 @@ import java.util.Optional;
 
 import com.ecjtaneo.room_reservation_api.user.dto.UserCreationCommandDto;
 import com.ecjtaneo.room_reservation_api.user.model.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
-    private UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final UserRepository userRepository;
 
     public Optional<User> getUser(String username) {
         return userRepository.findByUsername(username);

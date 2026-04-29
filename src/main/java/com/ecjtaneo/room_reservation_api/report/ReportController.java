@@ -1,6 +1,7 @@
 package com.ecjtaneo.room_reservation_api.report;
 
 import com.ecjtaneo.room_reservation_api.report.dto.ReportsSummaryDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,12 +13,9 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/reports")
+@RequiredArgsConstructor
 public class ReportController {
     private final ReportService reportService;
-
-    public ReportController(ReportService reportService) {
-        this.reportService = reportService;
-    }
 
     @GetMapping("/summary")
     public ReportsSummaryDto getReportsSummary() {

@@ -8,18 +8,16 @@ import com.ecjtaneo.room_reservation_api.room.dto.RoomUpdateDto;
 import com.ecjtaneo.room_reservation_api.room.model.RoomStatus;
 import com.ecjtaneo.room_reservation_api.room.model.RoomType;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/rooms")
+@RequiredArgsConstructor
 public class RoomController {
-    private RoomService roomService;
-
-    public RoomController(RoomService roomService) {
-        this.roomService = roomService;
-    }
+    private final RoomService roomService;
 
     @GetMapping("/{roomNumber}")
     public RoomPublicResponseDto showRoomByRoomNumber(@PathVariable String roomNumber) {

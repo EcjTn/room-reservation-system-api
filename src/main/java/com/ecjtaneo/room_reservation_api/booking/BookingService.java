@@ -12,6 +12,7 @@ import com.ecjtaneo.room_reservation_api.room.RoomService;
 import com.ecjtaneo.room_reservation_api.room.model.Room;
 import com.ecjtaneo.room_reservation_api.user.UserService;
 import com.ecjtaneo.room_reservation_api.user.model.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,16 +23,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BookingService {
     private final BookingRepository bookingRepository;
     private final RoomService roomService;
     private final UserService userService;
-
-    public BookingService(BookingRepository bookingRepository, RoomService roomService, UserService userService) {
-        this.bookingRepository = bookingRepository;
-        this.roomService = roomService;
-        this.userService = userService;
-    }
 
     private BigDecimal calculateTotalAmount(BigDecimal pricePerNight, LocalDate startDate, LocalDate endDate) {
         return pricePerNight

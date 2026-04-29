@@ -7,25 +7,17 @@ import com.ecjtaneo.room_reservation_api.common.exception.ValidationException;
 import com.ecjtaneo.room_reservation_api.infrastructure.security.recaptcha.RecaptchaService;
 import com.ecjtaneo.room_reservation_api.user.UserService;
 import com.ecjtaneo.room_reservation_api.user.dto.UserCreationCommandDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
-    private UserService userService;
-    private PasswordEncoder passwordEncoder;
-    private RecaptchaService recaptchaService;
-
-    public AuthService(
-        UserService userService,
-        PasswordEncoder passwordEncoder,
-        RecaptchaService recaptchaService
-    ) {
-        this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
-        this.recaptchaService = recaptchaService;
-    }
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
+    private final RecaptchaService recaptchaService;
 
     public MessageResponseDto register(AuthRegisterDto user) {
         if(userService.isUsernameTaken(user.username())) throw new ResourceConflictException("User already exists");
